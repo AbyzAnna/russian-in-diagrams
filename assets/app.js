@@ -19,7 +19,7 @@
     topics: function (n) { return n + (n === 1 ? " topic" : " topics"); },
     learnedOf: function (d, n) { return d + " of " + n + " learned"; },
     filter: "Find a topic (English or Russian)",
-    sideTitle: "Topics",
+    sideTitle: "Topics", menu: "Topics in this section",
     mapTitle: "Map of this section",
     notFound: "This section was not found.",
     sources: "Sources",
@@ -47,7 +47,7 @@
     },
     learnedOf: function (d, n) { return "Изучено " + d + " из " + n; },
     filter: "Найти тему",
-    sideTitle: "Темы",
+    sideTitle: "Темы", menu: "Темы раздела",
     mapTitle: "Карта раздела",
     notFound: "Раздел не найден.",
     sources: "Источники",
@@ -105,7 +105,7 @@
     if (L.navStart) links = '<a href="start.html"' + (current === "start" ? ' aria-current="page"' : "") + ">" + L.navStart + "</a>" + links;
     if (L.navTerms) links += '<a href="glossary.html"' + (current === "glossary" ? ' aria-current="page"' : "") + ">" + L.navTerms + "</a>";
     return '<header class="top"><div class="wrap">' +
-      '<a class="brand" href="index.html"><img src="assets/favicon.svg" alt="" width="30" height="30">' + L.brand + "</a>" +
+      '<a class="brand" href="index.html"><img src="assets/favicon.svg" alt="" width="30" height="30"><span class="brand-name">' + L.brand + "</span></a>" +
       '<nav class="grade-tabs" aria-label="Menu">' + links + "</nav>" +
       "</div></header>";
   }
@@ -178,9 +178,12 @@
   D.compare = function (d) {
     var rows = d.rows || [];
     var head = rows[0] || [];
+    var labels = head.map(function (c) { return esc(String(c).replace(/<[^>]+>/g, "")); });
     return "<table><thead><tr>" + head.map(function (c) { return "<th>" + rich(c) + "</th>"; }).join("") + "</tr></thead><tbody>" +
       rows.slice(1).map(function (r) {
-        return "<tr>" + r.map(function (c, i) { return i === 0 ? "<th>" + rich(c) + "</th>" : "<td>" + rich(c) + "</td>"; }).join("") + "</tr>";
+        return "<tr>" + r.map(function (c, i) {
+          return i === 0 ? "<th>" + rich(c) + "</th>" : '<td data-label="' + (labels[i] || "") + '"><span>' + rich(c) + "</span></td>";
+        }).join("") + "</tr>";
       }).join("") + "</tbody></table>";
   };
 
@@ -359,7 +362,7 @@
     var ids = themeIds(th).filter(function (id) { return idx[id]; });
 
     // sidebar: every section; the current one lists its topics
-    side.innerHTML = '<details open><summary>' + esc(th.title) + "</summary>" +
+    side.innerHTML = '<details open><summary>' + L.menu + "</summary>" +
       '<input class="filter" type="search" placeholder="' + esc(L.filter) + '" aria-label="' + esc(L.filter) + '">' +
       '<div class="bar"><i></i></div><p class="progress-line"></p><nav aria-label="' + esc(L.sideTitle) + '">' +
       themes().map(function (x) {
@@ -473,7 +476,7 @@
     });
     rows.sort(function (a, b) { return a.en.localeCompare(b.en); });
     document.getElementById("gloss").innerHTML = '<div class="diagram compare"><table><thead><tr><th>English</th><th>Russian</th><th>What it means</th></tr></thead><tbody>' +
-      rows.map(function (x) { return "<tr><th>" + esc(x.en) + '</th><td lang="ru"><b>' + esc(x.ru) + "</b></td><td>" + rich(x.hint || "") + "</td></tr>"; }).join("") +
+      rows.map(function (x) { return "<tr><th>" + esc(x.en) + '</th><td lang="ru" data-label="Russian"><span><b>' + esc(x.ru) + '</b></span></td><td data-label="Meaning"><span>' + rich(x.hint || "") + "</span></td></tr>"; }).join("") +
       "</tbody></table></div>";
   }
 
