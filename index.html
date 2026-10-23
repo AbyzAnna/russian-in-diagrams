@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Mono&family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<title>Russian in Diagrams</title>
+<meta name="description" content="Russian grammar for English speakers: every school topic for grades 7–11 as a diagram, a plain English explanation, translated examples and a quiz.">
+</head>
+<body>
+<div id="header"></div>
+<main class="wrap">
+  <section class="hero">
+    <h1>Learn Russian grammar with diagrams and plain English</h1>
+    <p class="lead">Every topic from the Russian school textbooks for grades 7–11, sorted by subject: parts of speech, verbs, sentences, punctuation and spelling. Each topic has a diagram, a short explanation, translated examples and a quiz.</p>
+    <div class="how">
+      <div><b>1. New to Cyrillic?</b><span><a href="start.html">Start here</a>: the alphabet, how to read the diagrams, and the six cases.</span></div>
+      <div><b>2. Pick a section</b><span>Use the course map below. Sections go from words to sentences to whole texts.</span></div>
+      <div><b>3. Check yourself</b><span>Every topic ends with a short quiz that explains each answer.</span></div>
+    </div>
+  </section>
+  <h2 class="sec-title">Course map</h2>
+  <div id="map"></div>
+  <h2 class="sec-title">Sections</h2>
+  <section id="themes" class="grades" aria-label="Sections"></section>
+</main>
+<div id="footer"></div>
+<script src="data/grade7.js"></script>
+<script src="data/grade8.js"></script>
+<script src="data/grade9.js"></script>
+<script src="data/grade10.js"></script>
+<script src="data/grade11.js"></script>
+<script src="data/themes.js"></script>
+<script src="assets/app.js"></script>
+<script>App.home();</script>
+</body>
+</html>
